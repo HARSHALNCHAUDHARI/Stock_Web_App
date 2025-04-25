@@ -24,7 +24,7 @@ Responsive Design: The platform is mobile-friendly, using Bootstrap to ensure it
 
 ## Setup Instructions:
 1. Clone this repository to your local machine:
-  git clone [https://github.com/HARSHALCHAUDHARI/Project.git](https://github.com/HARSHALNCHAUDHARI/Project.git)
+  git clone [https://github.com/HARSHALCHAUDHARI/Project.git](https://github.com/HARSHALNCHAUDHARI/Stock_Web_App.git)
 2. Navigate to the project folder:
   cd stock-market-learning-portal
 3. Install the required Python dependencies:
