@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TradeNest - Signup</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23ffdb4d'/><path d='M20 70 L40 50 L60 70 L80 40' stroke='%23000000' stroke-width='5' fill='none'/></svg>">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+  }
+
+  body {
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1569025690938-a00729c9e1f9?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+  }
+
+  .hero-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+  }
+
+  .hero-section {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      width: 100%;
+      z-index: 2;
+  }
+  .hero-section h1 {
+    font-size: 24px;
+    margin-left: 20px;
+}
+    .nav-links {
+      margin-right: 20px;
+    }
+    .nav-links a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* New Form Styles */
+    .form {
+      margin-top:20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      background-color: #ffffff;
+      padding: 40px;
+      width: 500px;
+      border-radius: 20px;
+      color: black;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-title {
+      font-size: 26px;
+      font-weight: 700;
+      text-align: center;
+      color: #1e3c72;
+    }
+
+    .form-subtitle {
+      font-size: 14px;
+      text-align: center;
+      color: #1e3c72;
+    }
+
+    .inputForm {
+      border: 1.5px solid #ecedec;
+      border-radius: 10px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      transition: 0.2s ease-in-out;
+    }
+
+    .inputForm:focus-within {
+      border: 1.5px solid #2d79f3;
+    }
+
+    .input {
+      margin-left: 10px;
+      border-radius: 10px;
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    .input:focus {
+      outline: none;
+    }
+
+    .flex-column > label {
+      color: #1e3c72;
+      font-weight: 600;
+    }
+
+    .button-submit {
+      margin-top: 10px;
+      background-color: #ffcc00;
+      border: none;
+      color: #1e3c72;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .button-submit:hover {
+      background-color: transparent;
+      border: 2px solid #ffcc00;
+      color: #1e3c72;
+      transform: scale(1.05);
+    }
+
+    .signin-text {
+      text-align: center;
+      font-size: 14px;
+      color: #1e3c72;
+    }
+
+    .signin-text a {
+      color: royalblue;
+      text-decoration: none;
+    }
+
+    .signin-text a:hover {
+      text-decoration: underline;
+    }
+
+    .error {
+      color: #ff4d4d;
+      margin-top: 5px;
+      text-align: center;
+    }
+    footer {
+      position: relative;
+      z-index: 2;
+      margin-top: 10px;
+      padding: 20px 0;
+      text-align: center;
+      color: white;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+  </style>
+
+  <script>
+    function validatePassword() {
+      const pass = document.getElementById("password").value;
+      const confirmPass = document.getElementById("confirm-password").value;
+      const errorMsg = document.getElementById("error-message");
+
+      if (pass !== confirmPass) {
+        errorMsg.innerText = "Passwords do not match.";
+        errorMsg.style.display = "block";
+        return false;
+      } else {
+        errorMsg.style.display = "none";
+        return true;
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="hero-overlay"></div>
+  <div class="hero-section">
+    <h1>📊 TradeNest</h1>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/prediction">Prediction</a>
+      <a href="/learning">Learning</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </div>
+
+  
+  <div class="container">
+    <form class="form" method="POST" action="/signup" onsubmit="return validatePassword()">
+      <div class="form-title">🔐 Create Account</div>
+      <div class="form-subtitle">Signup now and get full access to our app.</div>
+
+      <div class="flex-column">
+        <label>Full Name</label>
+        <div class="inputForm">
+          <input required name="full_name" type="text" class="input" placeholder="Enter your full name" />
+        </div>
+      </div>
+
+      <div class="flex-column">
+        <label>Mobile</label>
+        <div class="inputForm">
+          <input required name="mobile_number" type="tel" class="input" placeholder="Enter mobile number" />
+        </div>
+      </div>
+
+      <div class="flex-column">
+        <label>Username</label>
+        <div class="inputForm">
+          <input required name="username" type="text" class="input" placeholder="Choose a username" />
+        </div>
+      </div>
+
+      <div class="flex-column">
+        <label>Password</label>
+        <div class="inputForm">
+          <input required id="password" name="password" type="password" class="input" placeholder="Enter password" />
+        </div>
+      </div>
+
+      <div class="flex-column">
+        <label>Confirm Password</label>
+        <div class="inputForm">
+          <input required id="confirm-password" name="confirm_password" type="password" class="input" placeholder="Confirm password" />
+        </div>
+      </div>
+
+      <button type="submit" class="button-submit">Signup</button>
+
+      <p id="error-message" class="error" style="display:none;"></p>
+      <p class="error">{% if error %}{{ error }}{% endif %}</p>
+
+      <p class="signin-text">Already have an account? <a href="/login">Login here</a></p>
+    </form>
+  </div>
+
+<footer>
+    &copy; 2025 Stock Market Learning Portal. All Rights Reserved.
+</footer>
+
+</body>
+</html>

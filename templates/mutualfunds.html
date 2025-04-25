@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradeNest - Mutual_Funds</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23ffdb4d'/><path d='M20 70 L40 50 L60 70 L80 40' stroke='%23000000' stroke-width='5' fill='none'/></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: url('https://images.unsplash.com/photo-1569025690938-a00729c9e1f9?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      min-height: 100vh;
+      position: relative; /* Ensure body can act as a stacking context */
+    }
+    .hero-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 10vh;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1; /* Overlay behind all content */
+    }
+    .hero-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      z-index: 3; /* Hero section above the overlay */
+    }
+    .hero-section h1 {
+      font-size: 24px;
+      margin-left: 20px;
+    }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+    }
+    .nav-links a:hover {
+      color: #ffcc00;
+      text-decoration: underline;
+    }
+    .profile-dropdown  {
+        position: relative;
+        display: inline-block;
+        margin-left: 20px;
+    }
+    
+    .profile-icon {
+        width: 40px;
+        height: 40px;
+        background-color: #ffcc00;
+        color: #1e3c72;
+        border-radius: 50%;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: white;
+        color: #1e3c72;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+        padding: 12px;
+        border-radius: 8px;
+        z-index: 999;
+        text-align: left;
+        height: 105px;
+        
+    }
+        
+        
+    .dropdown-menu a, .dropdown-menu form button {
+      color: #1e3c72;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .profile-dropdown:hover .dropdown-menu {
+      display: none;
+    }
+    
+    .dropdown-menu a{
+      justify-self:center;
+    }
+    
+    .dropdown-menu a:hover{
+      transition: 0s;
+      text-decoration:none;
+      color: #e6b800;
+    }
+    
+    .dropdown-menu button:hover{
+      color: #e6b800;
+    }
+    
+    .dropdown-menu button{
+      font-size: 16px;
+    }
+    .section { background: #1e293b; margin: 20px; border-radius: 8px; padding: 20px; }
+    .section h2 { border-bottom: 2px solid #475569; padding-bottom: 10px; margin-bottom: 20px; }
+    iframe { border: none; width: 100%; height: 600px; }
+    .mutual-fund-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+    .card { background: #334155; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px #00000033; }
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: white;
+      opacity: 0.7;
+      position: relative;
+      z-index: 5; /* Footer above the overlay */
+    }
+  </style>
+</head>
+<body>
+    <div class="hero-overlay"></div>
+    <div class="hero-section">
+      <h1>📊 TradeNest</h1>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/prediction">Prediction</a>
+        <a href="/learning">Learning</a>
+        <a href="/contact">Contact</a>
+        {% if username %}
+        <div class="profile-dropdown">
+          <div class="profile-icon">{{ username[0]|upper }}</div>
+          <div class="dropdown-menu">
+            <a href="#"><i class="fas fa-user" style="margin-right: 8px;"></i>{{ username }}</a>
+            <form action="/logout" method="get">
+              <button type="submit"> <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>Logout</button>
+            </form>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+
+
+  <!-- Mutual Fund Explorer -->
+  <div class="section">
+    <h2>🔍 Mutual Fund Explorer</h2>
+    <iframe src="https://groww.in/mutual-funds/explore" height="700px"></iframe>
+  </div>
+
+  <!-- Top Performing Categories -->
+  <div class="section">
+    <h2>🚀 Top Performing Categories</h2>
+    <iframe src="https://www.moneycontrol.com/mutual-funds/performance-tracker/returns/large-cap-fund.html" height="700px"></iframe>
+  </div>
+
+  <!-- Investment Planning by Duration -->
+  <div class="section">
+    <h2>🗓️ Mutual Funds in Focus (Investment Planning)</h2>
+    <div class="mutual-fund-grid">
+      <div class="card"><strong>0–3 Months</strong><p>Liquid Funds, Overnight Funds</p></div>
+      <div class="card"><strong>3–12 Months</strong><p>Ultra Short Term, Low Duration Funds</p></div>
+      <div class="card"><strong>1–3 Years</strong><p>Short Term Debt Funds, Corporate Bonds</p></div>
+      <div class="card"><strong>3–5 Years</strong><p>Balanced Advantage, Large & Mid Cap</p></div>
+      <div class="card"><strong>5+ Years</strong><p>Equity Funds, Small Cap Funds</p></div>
+      <div class="card"><strong>Tax Savings</strong><p>ELSS Funds (80C Benefits)</p></div>
+    </div>
+  </div>
+
+  <!-- Highest Wealth Creating Funds (SIP) -->
+  <div class="section">
+    <h2>💰 Highest Wealth Creating Funds (SIP)</h2>
+    <iframe src="https://groww.in/mutual-funds/top-rated" height="700px"></iframe>
+  </div>
+
+  <!-- Consistent Performers (Optional Add) -->
+  <div class="section">
+    <h2>📈 Consistent Performers</h2>
+    <iframe src="https://www.moneycontrol.com/mutual-funds/performance-tracker/returns/small-cap-fund.html" height="700px"></iframe>
+  </div>
+
+  <footer>
+    &copy; 2025 Stock Market Learning Portal. All Rights Reserved.
+  </footer>
+
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // When the profile icon is clicked
+    $(".profile-icon").click(function(e) {
+      e.stopPropagation(); // Prevent the dropdown from closing immediately
+  
+      var dropdown = $(this).next(".dropdown-menu");
+  
+      // Toggle visibility of the dropdown
+      dropdown.toggle(); 
+  
+      // Positioning logic: Adjust the dropdown position if necessary
+      var windowWidth = $(window).width();
+      var dropdownLeft = dropdown.offset().left;
+      var dropdownWidth = dropdown.outerWidth();
+  
+      // Check if dropdown is going outside the right edge of the screen
+      if (dropdownLeft + dropdownWidth > windowWidth) {
+        dropdown.css("left", "auto");
+        dropdown.css("right", "0"); // Align to the right
+      } else {
+        dropdown.css("left", "0"); // Align to the left
+        dropdown.css("right", "auto");
+      }
+  
+      // Check if dropdown will overflow vertically at the bottom of the window
+      var windowHeight = $(window).height();
+      var dropdownHeight = dropdown.outerHeight();
+      var profileIconTop = $(this).offset().top;
+  
+      if (profileIconTop + dropdownHeight > windowHeight) {
+        dropdown.css("top", profileIconTop - dropdownHeight + "px"); // Adjust top if overflowing
+      } else {
+        dropdown.css("top", profileIconTop + $(this).outerHeight() + "px"); // Normal positioning below the icon
+      }
+    });
+  
+    // Close the dropdown if clicking outside of the profile icon or dropdown
+    $(document).click(function(event) {
+      if (!$(event.target).closest(".profile-dropdown").length) {
+        $(".dropdown-menu").hide();  // Hide dropdown when clicking outside
+      }
+    });
+  });
+  
+  
+</script>
+</body>
+</html>

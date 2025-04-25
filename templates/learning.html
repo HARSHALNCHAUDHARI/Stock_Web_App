@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TradeNest - Learning</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23ffdb4d'/><path d='M20 70 L40 50 L60 70 L80 40' stroke='%23000000' stroke-width='5' fill='none'/></svg>"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+  }
+  body {
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1569025690938-a00729c9e1f9?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+  }
+
+  .hero-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+  }
+
+    .hero-section {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      width: 100%;
+      z-index: 2;
+  }
+
+  .hero-section h1 {
+      font-size: 24px;
+      margin-left: 20px;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+  .nav-links {
+      margin-right: 20px;
+  }
+
+  .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+      transition: 0.3s;
+  }
+
+  .nav-links a:hover {
+      transaction: 0.3s;
+      color: #ffcc00;
+      text-decoration: underline;
+  }
+
+  .profile-dropdown  {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #ffcc00;
+    color: #1e3c72;
+    border-radius: 50%;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    color: #1e3c72;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    padding: 12px;
+    border-radius: 8px;
+    z-index: 999;
+    text-align: left;
+    height: 105px;
+    
+}
+    
+    
+.dropdown-menu a, .dropdown-menu form button {
+  color: #1e3c72;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.profile-dropdown:hover .dropdown-menu {
+  display: none;
+}
+
+.dropdown-menu a{
+  justify-self:center;
+}
+
+.dropdown-menu a:hover{
+  transition: 0s;
+  text-decoration:none;
+  color: #e6b800;
+}
+
+.dropdown-menu button:hover{
+  color: #e6b800;
+}
+
+.dropdown-menu button{
+  font-size: 16px;
+}
+
+
+    .container {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+      position: relative; /* Makes sure this content appears above the overlay */
+      z-index: 2;
+    }
+
+    header {
+      color: #ffcc00;
+      padding: 20px 0;
+      text-align: center;
+      z-index: 10; /* Ensure header is on top */
+      position: relative; /* Ensures the header is above overlay */
+    }
+    header h1 {
+      font-size: 2.5em;
+    }
+
+    .cards {
+      background-color: #ffffff;
+      padding: 50px;
+      margin: 25px auto;
+      max-width: 1000px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    footer p {
+      margin-top: 10px;
+      padding: 20px 0;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      opacity: 0.8;
+    }
+    p, li {
+      color: black;
+      line-height: 1.8;
+    }
+    h6 {
+      font-size: 20px;
+      color: white;
+      z-index: 2;
+    }
+    .card-header {
+      background-color: #ffcc00;
+      color: black;
+      font-size: 30px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-overlay"></div>
+  <div class="hero-section">
+    <h1>📊 TradeNest</h1>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/prediction">Prediction</a>
+      <a href="/learning">Learning</a>
+      <a href="/contact">Contact</a>
+      {% if username %}
+      <div class="profile-dropdown">
+        <div class="profile-icon">{{ username[0]|upper }}</div>
+        <div class="dropdown-menu">
+          <a href="#"><i class="fas fa-user" style="margin-right: 8px;"></i>{{ username }}</a>
+          <form action="/logout" method="get">
+            <button type="submit"> <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>Logout</button>
+          </form>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="container">
+
+    <header>
+      <h1>Comprehensive Stock Market Learning Portal</h1>
+      <h6>
+        Master the fundamentals, strategies, and tools to succeed in the stock
+        market
+      </h6>
+    </header>
+    <!-- Introduction Section -->
+    <section id="introduction" class="my-5">
+      <div class="cards">
+        <div class="card-header" style="margin-bottom:20px">Introduction to the Stock Market</div>
+        <div class="card-body ">
+          <p>
+            Stocks represent ownership in a company. When you buy stocks, you
+            become a shareholder, gaining the right to a portion of the
+            company’s profits, typically through dividends, and capital gains
+            when stock prices increase.
+          </p>
+          <p>
+            Stock markets, such as the New York Stock Exchange (NYSE) and
+            National Stock Exchange (NSE), facilitate the buying and selling
+            of stocks. They act as regulated marketplaces where traders and
+            investors can conduct transactions securely.
+          </p>
+          <p>
+            The stock market operates through supply and demand principles,
+            where factors like company performance, economic conditions, and
+            investor sentiment influence stock prices.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Basics Section -->
+    <section id="basics" class="my-5">
+      <div class="cards">
+        <div class="card-header">Stock Market Basics</div>
+        <div class="card-body">
+          <h5>Types of Stocks</h5>
+          <p>Stocks can be categorized as follows:</p>
+          <ul>
+            <li>
+              <strong>Common Stocks:</strong> These give shareholders voting
+              rights and potential dividends, although dividends aren’t
+              guaranteed.
+            </li>
+            <li>
+              <strong>Preferred Stocks:</strong> These do not offer voting
+              rights but guarantee a fixed dividend.
+            </li>
+            <li>
+              <strong>Growth Stocks:</strong> Companies with high potential
+              for future growth, often reinvesting profits rather than paying
+              dividends.
+            </li>
+            <li>
+              <strong>Dividend Stocks:</strong> Known for paying consistent
+              dividends, these stocks are popular among income-focused
+              investors.
+            </li>
+          </ul>
+
+          <h5>Key Market Participants</h5>
+          <p>The stock market involves several participants:</p>
+          <ul>
+            <li>
+              <strong>Retail Investors:</strong> Individual investors who buy
+              and sell stocks for personal investment.
+            </li>
+            <li>
+              <strong>Institutional Investors:</strong> Large entities like
+              mutual funds, pension funds, and insurance companies that invest
+              significant amounts in stocks.
+            </li>
+            <li>
+              <strong>Market Makers:</strong> Brokers who provide liquidity by
+              buying and selling stocks to ensure smooth transactions.
+            </li>
+          </ul>
+
+          <h5>Order Types</h5>
+          <p>
+            Understanding the order types is crucial for effective trading:
+          </p>
+          <ul>
+            <li>
+              <strong>Market Order:</strong> Executes immediately at the
+              current market price.
+            </li>
+            <li>
+              <strong>Limit Order:</strong> Sets a price limit for buying or
+              selling. The order executes only if the market reaches the
+              specified price.
+            </li>
+            <li>
+              <strong>Stop Order:</strong> Activates a buy or sell order once
+              a certain price threshold is reached.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Advanced Concepts Section -->
+    <section id="advanced" class="my-5">
+      <div class="cards">
+        <div class="card-header">Advanced Trading Concepts</div>
+        <div class="card-body">
+          <h5>Technical Analysis</h5>
+          <p>
+            Technical analysis involves studying past market data to predict
+            future price movements. Some popular tools include:
+          </p>
+          <ul>
+            <li>
+              <strong>Candlestick Charts:</strong> Visual representations
+              showing opening, closing, high, and low prices for a given
+              period.
+            </li>
+            <li>
+              <strong>Trend Lines:</strong> Lines drawn on charts to highlight
+              trends, used to determine potential breakout or reversal points.
+            </li>
+            <li>
+              <strong>Moving Averages:</strong> Smooths price data over time
+              to identify trends and potential price reversals.
+            </li>
+          </ul>
+
+          <h5>Fundamental Analysis</h5>
+          <p>
+            Fundamental analysis evaluates a company’s financial health.
+            Common metrics include:
+          </p>
+          <ul>
+            <li>
+              <strong>Price-to-Earnings (P/E) Ratio:</strong> Compares a
+              company’s share price to its earnings per share, indicating
+              valuation.
+            </li>
+            <li>
+              <strong>Return on Equity (ROE):</strong> Measures profitability
+              relative to shareholder equity.
+            </li>
+            <li>
+              <strong>Earnings Per Share (EPS):</strong> Indicates company
+              profitability on a per-share basis.
+            </li>
+          </ul>
+
+          <h5>Popular Trading Strategies</h5>
+          <ul>
+            <li>
+              <strong>Swing Trading:</strong> Captures short- to medium-term
+              gains over a few days or weeks.
+            </li>
+            <li>
+              <strong>Day Trading:</strong> Buys and sells stocks within the
+              same day to profit from small price changes.
+            </li>
+            <li>
+              <strong>Long-Term Investing:</strong> Focuses on holding stocks
+              for years to gain from growth and compounding returns.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="my-5">
+      <div class="cards">
+        <div class="card-header " style="margin-bottom:20px">Stock Market Learning Resources</div>
+        <div class="card-body">
+          <p>Enhance your stock market knowledge with these resources:</p>
+          <ul>
+            <li>
+              <a href="https://5paisa.com" target="_blank"
+                >5paisa Learning Center</a
+              >
+              - Offers guides, courses, and tools for investors of all levels.
+            </li>
+            <li>
+              <a href="https://www.investopedia.com" target="_blank"
+                >Investopedia</a
+              >
+              - A leading source for financial education, including articles,
+              tutorials, and videos.
+            </li>
+            <li>
+              <a href="https://www.moneycontrol.com" target="_blank"
+                >Moneycontrol</a
+              >
+              - Provides stock market updates, news, and expert analysis.
+            </li>
+            <li>
+              <a href="https://www.nseindia.com" target="_blank"
+                >National Stock Exchange (NSE)</a
+              >
+              - Official site for market updates, resources, and educational
+              content.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Stock Market App | All Rights Reserved</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+  <script>
+    $(document).ready(function() {
+      // When the profile icon is clicked
+      $(".profile-icon").click(function(e) {
+        e.stopPropagation(); // Prevent the dropdown from closing immediately
+    
+        var dropdown = $(this).next(".dropdown-menu");
+    
+        // Toggle visibility of the dropdown
+        dropdown.toggle(); 
+    
+        // Positioning logic: Adjust the dropdown position if necessary
+        var windowWidth = $(window).width();
+        var dropdownLeft = dropdown.offset().left;
+        var dropdownWidth = dropdown.outerWidth();
+    
+        // Check if dropdown is going outside the right edge of the screen
+        if (dropdownLeft + dropdownWidth > windowWidth) {
+          dropdown.css("left", "auto");
+          dropdown.css("right", "0"); // Align to the right
+        } else {
+          dropdown.css("left", "0"); // Align to the left
+          dropdown.css("right", "auto");
+        }
+    
+        // Check if dropdown will overflow vertically at the bottom of the window
+        var windowHeight = $(window).height();
+        var dropdownHeight = dropdown.outerHeight();
+        var profileIconTop = $(this).offset().top;
+    
+        if (profileIconTop + dropdownHeight > windowHeight) {
+          dropdown.css("top", profileIconTop - dropdownHeight + "px"); // Adjust top if overflowing
+        } else {
+          dropdown.css("top", profileIconTop + $(this).outerHeight() + "px"); // Normal positioning below the icon
+        }
+      });
+    
+      // Close the dropdown if clicking outside of the profile icon or dropdown
+      $(document).click(function(event) {
+        if (!$(event.target).closest(".profile-dropdown").length) {
+          $(".dropdown-menu").hide();  // Hide dropdown when clicking outside
+        }
+      });
+    });
+    
+    
+  </script>
+</body>
+</html>

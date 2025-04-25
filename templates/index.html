@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradeNest</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23ffdb4d'/><path d='M20 70 L40 50 L60 70 L80 40' stroke='%23000000' stroke-width='5' fill='none'/></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: url('https://images.unsplash.com/photo-1569025690938-a00729c9e1f9?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      min-height: 100vh;
+      position: relative; /* Ensure body can act as a stacking context */
+    }
+    .hero-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1; /* Overlay behind all content */
+    }
+    .hero-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      z-index: 3; /* Hero section above the overlay */
+    }
+    .hero-section h1 {
+      font-size: 24px;
+      margin-left: 20px;
+    }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+    }
+    .nav-links a:hover {
+      color: #ffcc00;
+      text-decoration: underline;
+    }
+    .profile-dropdown  {
+        position: relative;
+        display: inline-block;
+        margin-left: 20px;
+    }
+    
+    .profile-icon {
+        width: 40px;
+        height: 40px;
+        background-color: #ffcc00;
+        color: #1e3c72;
+        border-radius: 50%;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: white;
+        color: #1e3c72;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+        padding: 12px;
+        border-radius: 8px;
+        z-index: 999;
+        text-align: left;
+        height: 105px;
+        
+    }
+        
+        
+    .dropdown-menu a, .dropdown-menu form button {
+      color: #1e3c72;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .profile-dropdown:hover .dropdown-menu {
+      display: none;
+    }
+    
+    .dropdown-menu a{
+      justify-self:center;
+    }
+    
+    .dropdown-menu a:hover{
+      transition: 0s;
+      text-decoration:none;
+      color: #e6b800;
+    }
+    
+    .dropdown-menu button:hover{
+      color: #e6b800;
+    }
+    
+    .dropdown-menu button{
+      font-size: 16px;
+    }
+    .section {
+      padding: 30px;
+      position: relative;
+      z-index: 4; /* Ensure widgets and sections are above the overlay */
+    }
+    .section h2 {
+      font-size: 40px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ffcc00;
+      display: inline-block;
+    }
+    .mutual-funds {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .fund-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #ffcc00;
+    }
+    .fund-card h3 {
+      color: #ffcc00;
+    }
+    iframe {
+      border: none;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: white;
+      opacity: 0.7;
+      position: relative;
+      z-index: 5; /* Footer above the overlay */
+    }
+
+    .converter-calculator-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: space-between;
+      }
+      
+      .converter-box,
+      .calculator-box {
+        flex: 1 1 48%;
+        min-width: 300px;
+      }
+      
+      .calculator-box input,
+      .calculator-box button {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+      
+      .calculator-box button {
+        background-color: #ffcc00;
+        color: black;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      
+      .calculator-box button:hover {
+        background-color: #e6b800;
+      }
+
+    .tradingview-widget-container{
+        background-color:white;
+    }
+
+    .welcome{
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-grow: 1;
+        padding: 20px;
+        position: relative;
+        z-index: 2;
+        flex: 1;
+    }
+    .welcome-msg {
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+        padding: 10px 20px;
+        border-radius: 10px;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+    }
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+    }
+    .section1{
+        margin-top:5px;
+        position: relative;
+        z-index: 4;
+    }
+  </style>
+</head>
+<body>
+      <!-- Ticker Widget -->
+  <div class="section1">
+    <div class="tradingview-widget-container1" >
+<div class="finlogix-container"></div>
+<script type="text/javascript" src="https://widget.finlogix.com/Widget.js"></script>
+<script type="text/javascript">
+		Widget.init({
+				widgetId: "0c713fec-68c8-4161-9123-763792bde184",
+				type: "StripBar",
+				language: "en",
+				showBrand: true,
+				isShowTradeButton: true,
+				isShowBeneathLink: true,
+				isShowDataFromACYInfo: true,
+				symbolPairs: [
+								{
+												symbolId: "19",
+												symbolName: "EUR/USD"
+								},
+								{
+												symbolId: "36",
+												symbolName: "USD/JPY"
+								},
+								{
+												symbolId: "20",
+												symbolName: "GBP/AUD"
+								},
+								{
+												symbolId: "44",
+												symbolName: "XAU/USD"
+								},
+								{
+												symbolId: "45",
+												symbolName: "WTI"
+								},
+								{
+												symbolId: "52",
+												symbolName: "SP500"
+								}
+				],
+				isAdaptive: true
+		});
+</script>
+
+    </div>
+  </div>
+
+    <div class="hero-overlay"></div>
+    <div class="hero-section">
+      <h1>📊 TradeNest</h1>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/prediction">Prediction</a>
+        <a href="/learning">Learning</a>
+        <a href="/contact">Contact</a>
+        {% if username %}
+        <div class="profile-dropdown">
+          <div class="profile-icon">{{ username[0]|upper }}</div>
+          <div class="dropdown-menu">
+            <a href="#"><i class="fas fa-user" style="margin-right: 8px;"></i>{{ username }}</a>
+            <form action="/logout" method="get">
+              <button type="submit"> <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>Logout</button>
+            </form>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+        <div class="welcome">
+        {% if username %}
+            <div class="welcome-msg" style=" text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);">Welcome Back, <strong>{{ username }}</strong> Sir 👋</div>
+        {% endif %}
+        <h1>Welcome to the TradeNest</h1>
+        </div>
+
+
+  <!-- Advanced Real-Time Chart Widget -->
+  <div class="section">
+    <h2>Live Chart</h2>
+    <div class="tradingview-widget-container">
+      <div id="tradingview_advanced_chart"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+      <script type="text/javascript">
+        new TradingView.widget({
+          "container_id": "tradingview_advanced_chart",
+          "width": "100%",
+          "height": 600,
+          "symbol": "NASDAQ:AAPL",
+          "interval": "D",
+          "timezone": "Etc/UTC",
+          "theme": "white",
+          "style": "1",
+          "locale": "en",
+          "toolbar_bg": "white",
+          "enable_publishing": false,
+          "hide_top_toolbar": false,
+          "allow_symbol_change": true,
+          "save_image": false,
+          "studies": [],
+          "show_popup_button": true,
+          "popup_width": "1000",
+          "popup_height": "650"
+        });
+      </script>
+    </div>
+  </div>
+
+  <!-- Market Data Widget -->
+  <div class="section">
+    <h2>Market Data Overview</h2>
+    <div class="tradingview-widget-container">
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+      {
+        "colorTheme": "black",
+        "dateRange": "12M",
+        "showChart": true,
+        "locale": "en",
+        "width": "100%",
+        "height": 600,
+        "isTransparent": true,
+        "showSymbolLogo": true,
+        "tabs": [
+          {
+            "title": "Indices",
+            "symbols": [
+              {"s": "FOREXCOM:SPXUSD", "d": "S&P 500"},
+              {"s": "FOREXCOM:NSXUSD", "d": "Nasdaq 100"},
+              {"s": "FOREXCOM:DJI", "d": "Dow 30"},
+              {"s": "INDEX:NKY", "d": "Nikkei 225"},
+              {"s": "INDEX:DEU40", "d": "DAX Index"},
+              {"s": "FOREXCOM:UKXGBP", "d": "UK 100"}
+            ]
+          },
+          {
+            "title": "Commodities",
+            "symbols": [
+              {"s": "COMEX:GC1!", "d": "Gold"},
+              {"s": "COMEX:SI1!", "d": "Silver"},
+              {"s": "NYMEX:CL1!", "d": "Crude Oil"}
+            ]
+          },
+          {
+            "title": "Forex",
+            "symbols": [
+              {"s": "FX:EURUSD", "d": "EUR/USD"},
+              {"s": "FX:GBPUSD", "d": "GBP/USD"},
+              {"s": "FX:USDJPY", "d": "USD/JPY"},
+              {"s": "FX:USDCAD", "d": "USD/CAD"}
+            ]
+          }
+        ]
+      }
+      </script>
+    </div>
+  </div>
+
+   <!-- Converter and Calculator Section -->
+<div class="section converter-calculator-wrapper">
+    <div class="widget-card converter-box">
+      <h2>Currency Converter</h2>
+      <div class="tradingview-widget-container">
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async>
+        {
+          "width": "100%",
+          "height": "400",
+          "currencies": [
+            "EUR",
+            "USD",
+            "JPY",
+            "GBP",
+            "AUD",
+            "CAD",
+            "CHF",
+            "CNY"
+          ],
+          "colorTheme": "light",
+          "isTransparent": false,
+          "locale": "en"
+        }
+        </script>
+      </div>
+    </div>
+  
+    <div class="widget-card calculator-box" >
+      <h2>Position Size Calculator</h2>
+      <form id="positionForm" style="background-color:white; height: 90%;" >
+        <label style="color:black; display:block; text-align:center; padding-top:13px;" >Account Balance ($):</label><br>
+        <input type="number" id="balance" style="width:80%; display: block; margin:auto; padding: 10px;" required><br><br>
+        <label style="color:black; display:block; text-align:center;">Risk % per Trade:</label><br>
+        <input type="number" id="risk" style="width:80%; display: block; margin:auto; padding: 10px; " required><br><br>
+        <label style="color:black; display:block; text-align:center;">Stop Loss (in pips or points):</label><br>
+        <input type="number" id="stopLoss" style="width:80%; display: block; margin: auto; padding: 10px; " required><br><br>
+        <button type="submit" style="width:80%; display: block; margin:auto; padding: 10px;">Calculate</button>
+        <p id="result" style="margin-top:10px; font-weight: bold;"></p>
+      </form>
+    </div>
+  </div>
+  
+
+  <!-- Economic Calendar Widget -->
+  <div class="section">
+    <h2>Economic Calendar</h2>
+    <div class="tradingview-widget-container" style="height:80vh;">
+      <!-- Finlogix Widget BEGIN-->
+    <div class="finlogix-container" ></div>
+    <script type="text/javascript" src="https://widget.finlogix.com/Widget.js"></script>
+    <script type="text/javascript">
+            Widget.init({
+                    widgetId: "0c713fec-68c8-4161-9123-763792bde184",
+                    type: "EconomicCalendar",
+                    language: "en",
+                    showBrand: true,
+                    isShowTradeButton: true,
+                    isShowBeneathLink: true,
+                    isShowDataFromACYInfo: true,
+                    isAdaptive: true
+            });
+    </script>
+    <!-- Finlogix Widget END-->
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Stock Market Learning Portal. All Rights Reserved.
+  </footer>
+
+  <script>
+    document.getElementById("positionForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const balance = parseFloat(document.getElementById("balance").value);
+      const risk = parseFloat(document.getElementById("risk").value);
+      const stopLoss = parseFloat(document.getElementById("stopLoss").value);
+  
+      const riskAmount = balance * (risk / 100);
+      const positionSize = riskAmount / stopLoss;
+  
+      document.getElementById("result").innerText =
+        "Recommended Position Size: " + positionSize.toFixed(2) + " units";
+    });
+  </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // When the profile icon is clicked
+    $(".profile-icon").click(function(e) {
+      e.stopPropagation(); // Prevent the dropdown from closing immediately
+  
+      var dropdown = $(this).next(".dropdown-menu");
+  
+      // Toggle visibility of the dropdown
+      dropdown.toggle(); 
+  
+      // Positioning logic: Adjust the dropdown position if necessary
+      var windowWidth = $(window).width();
+      var dropdownLeft = dropdown.offset().left;
+      var dropdownWidth = dropdown.outerWidth();
+  
+      // Check if dropdown is going outside the right edge of the screen
+      if (dropdownLeft + dropdownWidth > windowWidth) {
+        dropdown.css("left", "auto");
+        dropdown.css("right", "0"); // Align to the right
+      } else {
+        dropdown.css("left", "0"); // Align to the left
+        dropdown.css("right", "auto");
+      }
+  
+      // Check if dropdown will overflow vertically at the bottom of the window
+      var windowHeight = $(window).height();
+      var dropdownHeight = dropdown.outerHeight();
+      var profileIconTop = $(this).offset().top;
+  
+      if (profileIconTop + dropdownHeight > windowHeight) {
+        dropdown.css("top", profileIconTop - dropdownHeight + "px"); // Adjust top if overflowing
+      } else {
+        dropdown.css("top", profileIconTop + $(this).outerHeight() + "px"); // Normal positioning below the icon
+      }
+    });
+  
+    // Close the dropdown if clicking outside of the profile icon or dropdown
+    $(document).click(function(event) {
+      if (!$(event.target).closest(".profile-dropdown").length) {
+        $(".dropdown-menu").hide();  // Hide dropdown when clicking outside
+      }
+    });
+  });
+  
+  
+</script>
+</body>
+</html>

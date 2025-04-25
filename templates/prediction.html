@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TradeNest - Prediction</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23ffdb4d'/><path d='M20 70 L40 50 L60 70 L80 40' stroke='%23000000' stroke-width='5' fill='none'/></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+  }
+
+  body {
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1569025690938-a00729c9e1f9?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+  }
+
+  .hero-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+  }
+    .hero-section {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      width: 100%;
+      z-index: 2;
+  }
+
+  .hero-section h1 {
+      font-size: 24px;
+      margin-left: 20px;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+  .nav-links {
+      margin-right: 20px;
+  }
+
+  .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+      transition: 0.3s;
+  }
+
+  .nav-links a:hover {
+      transaction: 0.3s;
+      color: #ffcc00;
+      text-decoration: underline;
+  }
+
+  .profile-dropdown  {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #ffcc00;
+    color: #1e3c72;
+    border-radius: 50%;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    color: #1e3c72;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    padding: 12px;
+    border-radius: 8px;
+    z-index: 999;
+    text-align: left;
+    height: 105px;
+}
+  
+  
+  .dropdown-menu a, .dropdown-menu form button {
+    color: #1e3c72;
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .profile-dropdown:hover .dropdown-menu {
+    display: none;
+  }
+  
+  .dropdown-menu a{
+    justify-self:center;
+  }
+
+  .dropdown-menu a:hover{
+    transition: 0s;
+    text-decoration:none;
+    color: #e6b800;
+  }
+
+  .dropdown-menu button:hover{
+    color: #e6b800;
+  }
+
+  .dropdown-menu button{
+    font-size: 16px;
+  }
+  
+    .container {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
+    }
+    form {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    input[type="text"], input[type="date"] {
+      padding: 10px;
+      width: 200px;
+      border-radius: 5px;
+      border: none;
+      margin: 0 5px;
+    }
+    input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    img {
+      width: 100%;
+      max-width: 1000px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px black;
+      margin: 20px auto;
+      display: block;
+    }
+    h2, h3 {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 2em;
+    }
+
+    .table-container {
+      margin: 30px auto;
+      max-width: 1000px;
+      overflow-x: auto;
+    }
+    .plot-container {
+      margin-top: 40px;
+    }
+    .bottom {
+      padding: 20px 0;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      opacity: 0.8;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .result-box {
+      text-align: center;
+      font-size: 1.2em;
+      margin-top: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    
+    .data-table th,
+    .data-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    
+    .data-table th {
+      background-color: #444;
+      color: #ffcc00;
+    }
+    
+    footer p {
+      position: relative;
+      z-index: 2;
+      margin-top: 10px;
+      padding: 20px 0;
+      text-align: center;
+      color: white;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="hero-overlay"></div>
+
+  <!-- Header -->
+  <div class="hero-section">
+    <h1 href="/">📊 TradeNest</h1>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/prediction">Prediction</a>
+      <a href="/learning">Learning</a>
+      <a href="/contact">Contact</a>
+      {% if username %}
+      <div class="profile-dropdown">
+        <div class="profile-icon">{{ username[0]|upper }}</div>
+        <div class="dropdown-menu">
+          <a href="#"><i class="fas fa-user" style="margin-right: 8px;"></i>{{ username }}</a>
+          <form action="/logout" method="get">
+            <button type="submit"> <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>Logout</button>
+          </form>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <form id="prediction-form">
+  <input type="text" name="ticker" id="ticker" placeholder="Enter stock ticker" required>
+  <input type="date" name="start" id="start" required>
+  <input type="date" name="end" id="end" required>
+  <input type="submit" value="Predict">
+</form>
+
+
+    <div class="result-box" id="error-box" style="display: none;"></div>
+
+    <div class="table-container" id="table-container"></div>
+    <div class="plot-container" id="plot-container"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Stock Market App | All Rights Reserved</p>
+  </footer>
+
+  <!-- JavaScript -->
+<!-- JavaScript -->
+<script>
+  document.getElementById("prediction-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const ticker = document.getElementById("ticker").value;
+    const start = document.getElementById("start").value;
+    const end = document.getElementById("end").value;
+    const errorBox = document.getElementById("error-box");
+    const tableContainer = document.getElementById("table-container");
+    const plotContainer = document.getElementById("plot-container");
+
+    fetch("/fetch-data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `ticker=${encodeURIComponent(ticker)}&start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        errorBox.textContent = data.error;
+        errorBox.style.display = "block";
+        tableContainer.innerHTML = "";
+        plotContainer.innerHTML = "";
+        return;
+      }
+    
+      errorBox.style.display = "none";
+    
+      tableContainer.innerHTML = `
+        <h3>📊 Data Overview</h3>
+        ${data.summary}
+      `;
+    
+      plotContainer.innerHTML = `
+        <h2>📈 Open vs Close Price</h2>
+        <img src="data:image/png;base64,${data.open_close_plot}" alt="Open vs Close">
+    
+        <h2>🔁 100-day vs 200-day Moving Average</h2>
+        <img src="data:image/png;base64,${data.ma_plot}" alt="MA100 vs MA200">
+    
+        <h2>🤖 Original vs Predicted Price</h2>
+        <img src="data:image/png;base64,${data.prediction_plot}" alt="Prediction Plot">
+
+        <h2>🤖 LSTM vs Without LSTM</h2>
+        <img src="{{ url_for('static', filename='lstm_vs_rnn_comparison.png') }}" alt="LSTM vs RNN Comparison">
+
+      `;
+    
+      // ✅ Move this here
+      if (data.difference_lstm && data.difference_non_lstm) {
+        const avgDiffLSTM = (data.difference_lstm.reduce((a, b) => a + Math.abs(b), 0) / data.difference_lstm.length).toFixed(2);
+        const avgDiffNonLSTM = (data.difference_non_lstm.reduce((a, b) => a + Math.abs(b), 0) / data.difference_non_lstm.length).toFixed(2);
+    
+        plotContainer.innerHTML += `
+          <div class="result-box">
+            <p><strong>📊 Avg Error (LSTM):</strong> ${avgDiffLSTM}</p>
+            <p><strong>📉 Avg Error (Non-LSTM):</strong> ${avgDiffNonLSTM}</p>
+          </div>
+        `;
+      }
+    
+    })
+    .catch(error => {
+      errorBox.textContent = "An error occurred while fetching prediction.";
+      errorBox.style.display = "block";
+      console.error("Fetch error:", error);
+    });    
+  });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // When the profile icon is clicked
+    $(".profile-icon").click(function(e) {
+      e.stopPropagation(); // Prevent the dropdown from closing immediately
+  
+      var dropdown = $(this).next(".dropdown-menu");
+  
+      // Toggle visibility of the dropdown
+      dropdown.toggle(); 
+  
+      // Positioning logic: Adjust the dropdown position if necessary
+      var windowWidth = $(window).width();
+      var dropdownLeft = dropdown.offset().left;
+      var dropdownWidth = dropdown.outerWidth();
+  
+      // Check if dropdown is going outside the right edge of the screen
+      if (dropdownLeft + dropdownWidth > windowWidth) {
+        dropdown.css("left", "auto");
+        dropdown.css("right", "0"); // Align to the right
+      } else {
+        dropdown.css("left", "0"); // Align to the left
+        dropdown.css("right", "auto");
+      }
+  
+      // Check if dropdown will overflow vertically at the bottom of the window
+      var windowHeight = $(window).height();
+      var dropdownHeight = dropdown.outerHeight();
+      var profileIconTop = $(this).offset().top;
+  
+      if (profileIconTop + dropdownHeight > windowHeight) {
+        dropdown.css("top", profileIconTop - dropdownHeight + "px"); // Adjust top if overflowing
+      } else {
+        dropdown.css("top", profileIconTop + $(this).outerHeight() + "px"); // Normal positioning below the icon
+      }
+    });
+  
+    // Close the dropdown if clicking outside of the profile icon or dropdown
+    $(document).click(function(event) {
+      if (!$(event.target).closest(".profile-dropdown").length) {
+        $(".dropdown-menu").hide();  // Hide dropdown when clicking outside
+      }
+    });
+  });
+  
+  
+</script>
+</body>
+</html>

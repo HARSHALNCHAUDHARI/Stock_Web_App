@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Stock Market Predictor</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23ffdb4d'/><path d='M20 70 L40 50 L60 70 L80 40' stroke='%23000000' stroke-width='5' fill='none'/></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+      
+        body {
+            position: relative;
+            background: url('https://images.unsplash.com/photo-1569025690938-a00729c9e1f9?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+      
+        .hero-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+          .hero-section {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            width: 100%;
+            z-index: 2;
+        }
+      
+        .hero-section h1 {
+            font-size: 24px;
+            margin-left: 20px;
+        }
+        h1 {
+          font-size: 2.5rem;
+          margin-bottom: 20px;
+          text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+      }
+      
+        .nav-links {
+            margin-right: 20px;
+        }
+      
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+      
+        .nav-links a:hover {
+            transaction: 0.3s;
+            color: #ffcc00;
+            text-decoration: underline;
+        }
+        .profile-dropdown  {
+            position: relative;
+            display: inline-block;
+            margin-left: 20px;
+        }
+        
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #ffcc00;
+            color: #1e3c72;
+            border-radius: 50%;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            color: #1e3c72;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 8px;
+            z-index: 999;
+            text-align: left;
+            height: 105px;
+        }
+          
+          
+          .dropdown-menu a, .dropdown-menu form button {
+            color: #1e3c72;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+          }
+          
+          .profile-dropdown:hover .dropdown-menu {
+            display: none;
+          }
+          
+          .dropdown-menu a{
+            justify-self:center;
+          }
+        
+          .dropdown-menu a:hover{
+            transition: 0s;
+            text-decoration:none;
+            color: #e6b800;
+          }
+        
+          .dropdown-menu button:hover{
+            color: #e6b800;
+          }
+        
+          .dropdown-menu button{
+            font-size: 16px;
+          }
+
+        .container {
+            width: 700px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            position: relative;   
+            z-index: 2;          
+        }
+
+        h2 {
+            text-align: center;
+            color: #1e2a38;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input, textarea {
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #ffcc00;
+            border: none;
+            color: #1e3c72;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+          background-color: transparent;
+          border: 2px solid #ffcc00;
+          color: #1e3c72;
+          transform: scale(1.05);
+        }
+
+        .contact-info {
+            margin-top: 40px;
+        }
+
+        .contact-info h3 {
+            color: #1e2a38;
+            margin-bottom: 10px;
+        }
+
+        .contact-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        footer {
+            position: relative;
+            z-index: 2;
+            margin-top: 10px;
+            padding: 20px 0;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            opacity: 0.8;
+          }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+ <div class="hero-overlay"></div>
+    <!-- Header -->
+  <div class="hero-section">
+    <h1 href="/">📊 Stock Market App</h1>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/prediction">Prediction</a>
+      <a href="/learning">Learning</a>
+      <a href="/contact">Contact</a>
+      {% if username %}
+      <div class="profile-dropdown">
+        <div class="profile-icon">{{ username[0]|upper }}</div>
+        <div class="dropdown-menu">
+          <a href="#"><i class="fas fa-user" style="margin-right: 8px;"></i>{{ username }}</a>
+          <form action="/logout" method="get">
+            <button type="submit"> <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>Logout</button>
+          </form>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  </div>
+
+    <div class="container">
+        <h2>Contact Us</h2>
+        <form action="/submit_contact" method="POST">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject">
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+
+        <div class="contact-info">
+            <h3>Other Ways to Reach Us</h3>
+            <p style="text-decoration:none;"><strong>Email:</strong> <a href="mailto:support@trednest.com">support@stockprediction.com</a></p>
+            <p><strong>Phone:</strong> <a href="tel:+917796502374">+91 7796502374</a></p>
+            <p><strong>Address:</strong>MIT ADT UNIVERSITY, Loni Kalbhor, Pune, Maharashtra, India.</p>
+        </div>
+    </div>
+
+
+    <footer>
+        &copy; 2025 Stock Market Predictor. All rights reserved.
+    </footer>
+
+</body>
+</html>
